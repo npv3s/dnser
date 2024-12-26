@@ -4,7 +4,7 @@ use std::io;
 use std::io::BufRead;
 use std::str::FromStr;
 
-use trust_dns_server::proto::rr::LowerName;
+use hickory_server::proto::rr::LowerName;
 
 #[derive(Clone, Debug)]
 pub struct DomainFilter {

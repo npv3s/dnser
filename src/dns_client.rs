@@ -1,12 +1,12 @@
 use std::error::Error;
 use std::net::SocketAddr;
 
+use hickory_client::client::{AsyncClient, ClientHandle};
+use hickory_client::op::DnsResponse;
+use hickory_client::proto::iocompat::AsyncIoTokioAsStd;
+use hickory_client::rr::{DNSClass, Name, RecordType};
+use hickory_client::tcp::TcpClientStream;
 use tokio::net::TcpStream;
-use trust_dns_client::client::{AsyncClient, ClientHandle};
-use trust_dns_client::op::DnsResponse;
-use trust_dns_client::proto::iocompat::AsyncIoTokioAsStd;
-use trust_dns_client::rr::{DNSClass, Name, RecordType};
-use trust_dns_client::tcp::TcpClientStream;
 
 pub struct DnsClient {
     upstream: SocketAddr,

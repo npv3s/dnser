@@ -1,9 +1,9 @@
 use clap::Parser;
+use hickory_server::ServerFuture;
 use tokio::net::{TcpListener, UdpSocket};
 use tokio::signal;
 use tokio::time::{sleep, Duration};
 use tracing::{error, info};
-use trust_dns_server::ServerFuture;
 
 use handler::Handler;
 use options::Options;
@@ -28,9 +28,8 @@ async fn main() {
         Ok(domain_filter) => domain_filter,
         Err(err) => {
             error!("couldn't read domains list file: {}", err);
-            return
+            return;
         }
-        
     };
     let nat_router = NatRouter::new(options.routed_subnet);
     let dns_client = DnsClient::new(options.upstream);
@@ -58,7 +57,7 @@ async fn main() {
         }
     }
 
-    tokio::spawn(async {
+    tokio::spawn(async move {
         match server.block_until_done().await {
             Ok(_) => (),
             Err(err) => {
